@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/providers/report_provider.dart';
@@ -30,9 +31,23 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
     }
   }
 
+  Map<String, dynamic> _parseSummary(dynamic raw) {
+    if (raw is Map<String, dynamic>) return raw;
+    if (raw is Map) return Map<String, dynamic>.from(raw);
+    if (raw is String) {
+      try {
+        final decoded = json.decode(raw);
+        if (decoded is Map) return Map<String, dynamic>.from(decoded);
+      } catch (_) {}
+    }
+    return {};
+  }
+
   Widget _buildSummary(Map<String, dynamic> data) {
+    final inner = data['data'];
+    if (inner is! Map) return const SizedBox();
     if (_reportType == 'attendance') {
-      final summary = data['data']['summary'] ?? {};
+      final summary = _parseSummary(inner['summary']);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +56,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         ],
       );
     } else if (_reportType == 'salary') {
-      final summary = data['data']['summary'] ?? {};
+      final summary = _parseSummary(inner['summary']);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,7 +65,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
         ],
       );
     } else if (_reportType == 'leave') {
-      final summary = data['data']['summary'] ?? {};
+      final summary = _parseSummary(inner['summary']);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -99,7 +114,7 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
-                    initialValue: _reportType,
+                    value: _reportType,
                     decoration: const InputDecoration(labelText: 'Report Type'),
                     items: const [
                       DropdownMenuItem(value: 'attendance', child: Text('Attendance Report')),

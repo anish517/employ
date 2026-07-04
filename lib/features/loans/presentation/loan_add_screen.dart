@@ -63,7 +63,7 @@ class _LoanAddScreenState extends ConsumerState<LoanAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final employees = ref.watch(employeeListProvider({'status': 'Active'}));
+    final employees = ref.watch(employeeListProvider(const {'status': 'Active'}));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Add Loan/Advance')),

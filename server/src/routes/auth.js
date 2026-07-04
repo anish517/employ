@@ -47,7 +47,7 @@ router.post('/refresh', async (req,res,next)=>{
   try{
     const { refreshToken } = req.body;
     if(!refreshToken) return res.status(400).json({ success:false, error:{ code:'VALIDATION_ERROR', message:'refreshToken required' } });
-    const all = await RefreshToken.find({ revoked: false }).sort({ createdAt: -1 }).limit(100);
+    const all = await RefreshToken.find({ revoked: false }).sort({ createdAt: -1 }).limit(10);
     // find matching hash
     let matched = null;
     for(const r of all){
@@ -73,7 +73,7 @@ router.post('/logout', async (req,res,next)=>{
   try{
     const { refreshToken } = req.body;
     if(!refreshToken) return res.status(400).json({ success:false, error:{ code:'VALIDATION_ERROR', message:'refreshToken required' } });
-    const all = await RefreshToken.find({ revoked: false }).limit(200);
+    const all = await RefreshToken.find({ revoked: false }).limit(10);
     for(const r of all){ const ok = await bcrypt.compare(refreshToken, r.tokenHash); if(ok){ r.revoked = true; await r.save(); break; } }
     res.json({ success:true });
   }catch(err){ next(err); }

@@ -107,14 +107,11 @@ class _DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isActive = currentRoute == route;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: isActive ? AppTheme.primary.withValues(alpha: 0.15) : Colors.transparent,
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       child: ListTile(
         dense: true,
+        tileColor: isActive ? AppTheme.primary.withValues(alpha: 0.15) : Colors.transparent,
         leading: Icon(icon, size: 20, color: isActive ? AppTheme.secondary : AppTheme.onSurface.withValues(alpha: 0.6)),
         title: Text(label,
             style: TextStyle(
