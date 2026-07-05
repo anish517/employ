@@ -14,19 +14,19 @@ class EmployeeListScreen extends ConsumerStatefulWidget {
 class _EmployeeListScreenState extends ConsumerState<EmployeeListScreen> {
   final _search = TextEditingController();
   String? _statusFilter;
-  Map<String, String>? _params;
+  String? _query;
 
   void _applyFilters() {
     final params = <String, String>{};
     if (_search.text.isNotEmpty) params['search'] = _search.text;
     if (_statusFilter != null) params['status'] = _statusFilter!;
-    setState(() => _params = params.isEmpty ? null : params);
+    setState(() => _query = params.isEmpty ? null : params.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&'));
     ref.invalidate(employeeListProvider);
   }
 
   @override
   Widget build(BuildContext context) {
-    final async = ref.watch(employeeListProvider(_params));
+    final async = ref.watch(employeeListProvider(_query));
     return Scaffold(
       appBar: AppBar(title: const Text('Employees')),
       drawer: const AppDrawer(),

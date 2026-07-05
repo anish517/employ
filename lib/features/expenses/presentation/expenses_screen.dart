@@ -53,7 +53,7 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
       context: context,
       builder: (c) => StatefulBuilder(
         builder: (ctx, setState) {
-          final employees = ref.watch(employeeListProvider({'status': 'Active'}));
+          final employees = ref.watch(employeeListProvider('status=Active'));
           return AlertDialog(
             title: Text(expense == null ? 'Add Expense' : 'Edit Expense'),
             content: Form(
@@ -188,7 +188,7 @@ class _ExpensesScreenState extends ConsumerState<ExpensesScreen> {
   @override
   Widget build(BuildContext context) {
     final employees = ref.watch(employeeListProvider(null));
-    final async = ref.watch(expenseListProvider({'month': _monthString}));
+      final async = ref.watch(expenseListProvider(_monthString));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Expenses')),

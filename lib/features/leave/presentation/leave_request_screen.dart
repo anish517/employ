@@ -63,7 +63,7 @@ class _LeaveRequestScreenState extends ConsumerState<LeaveRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final employees = ref.watch(employeeListProvider(const {'status': 'Active'}));
+    final employees = ref.watch(employeeListProvider('status=Active'));
     final leaveTypes = ref.watch(leaveTypeListProvider);
 
     return Scaffold(

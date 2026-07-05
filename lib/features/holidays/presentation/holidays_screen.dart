@@ -155,7 +155,7 @@ class _HolidaysScreenState extends ConsumerState<HolidaysScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final async = ref.watch(holidayListProvider({'year': _selectedYear.toString()}));
+    final async = ref.watch(holidayListProvider(_selectedYear.toString()));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Holidays')),

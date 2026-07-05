@@ -62,7 +62,7 @@ class _FineAddScreenState extends ConsumerState<FineAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final employees = ref.watch(employeeListProvider(const {'status': 'Active'}));
+    final employees = ref.watch(employeeListProvider('status=Active'));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Add Fine')),

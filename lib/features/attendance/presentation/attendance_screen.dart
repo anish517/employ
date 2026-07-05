@@ -19,7 +19,7 @@ class _AttendanceScreenState extends ConsumerState<AttendanceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final employees = ref.watch(employeeListProvider({'status': 'Active'}));
+    final employees = ref.watch(employeeListProvider('status=Active'));
     final async = ref.watch(monthlyAttendanceProvider(_monthString));
 
     return Scaffold(

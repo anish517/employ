@@ -35,7 +35,7 @@ class _LeaveListScreenState extends ConsumerState<LeaveListScreen> {
   Widget build(BuildContext context) {
     final employees = ref.watch(employeeListProvider(null));
     final leaveTypes = ref.watch(leaveTypeListProvider);
-    final async = ref.watch(leaveListProvider({'status': _statusFilter}));
+    final async = ref.watch(leaveListProvider(_statusFilter));
 
     return Scaffold(
       appBar: AppBar(

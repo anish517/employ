@@ -2,15 +2,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'api_provider.dart';
 import '../services/expense_service.dart';
 
-final expenseListProvider = FutureProvider.family<Map<String, dynamic>, Map<String, String>?>((ref, params) async {
+final expenseListProvider = FutureProvider.family<Map<String, dynamic>, String?>((ref, month) async {
   final api = ref.read(apiClientProvider);
   String path = '/expenses';
-  if (params != null && params.isNotEmpty) {
-    final qs = params.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&');
-    path = '$path?$qs';
+  if (month != null && month.isNotEmpty) {
+    path = '$path?month=${Uri.encodeComponent(month)}';
   }
   final res = await api.get(path);
-  return res as Map<String, dynamic>; // Contains 'data' and 'summary'
+  return res as Map<String, dynamic>;
 });
 
 final expenseServiceProvider = Provider((ref) => ExpenseService(ref.read(apiClientProvider)));

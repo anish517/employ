@@ -17,12 +17,11 @@ final leaveTypeListProvider = FutureProvider<List<dynamic>>((ref) async {
   return (res is Map && res['data'] is List) ? List<dynamic>.from(res['data']) : [];
 });
 
-final salaryHistoryProvider = FutureProvider.family<List<dynamic>, Map<String, String>?>((ref, params) async {
+final salaryHistoryProvider = FutureProvider.family<List<dynamic>, String?>((ref, query) async {
   final api = ref.read(apiClientProvider);
   String path = '/salary-history';
-  if (params != null && params.isNotEmpty) {
-    final qs = params.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&');
-    path = '$path?$qs';
+  if (query != null && query.isNotEmpty) {
+    path = '$path?$query';
   }
   final res = await api.get(path);
   return (res is Map && res['data'] is List) ? List<dynamic>.from(res['data']) : [];

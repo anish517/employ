@@ -2,12 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'api_provider.dart';
 import '../services/leave_service.dart';
 
-final leaveListProvider = FutureProvider.family<List<dynamic>, Map<String, String>?>((ref, params) async {
+final leaveListProvider = FutureProvider.family<List<dynamic>, String?>((ref, status) async {
   final api = ref.read(apiClientProvider);
   String path = '/leave';
-  if (params != null && params.isNotEmpty) {
-    final qs = params.entries.map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}').join('&');
-    path = '$path?$qs';
+  if (status != null && status.isNotEmpty) {
+    path = '$path?status=${Uri.encodeComponent(status)}';
   }
   final res = await api.get(path);
   return (res is Map && res['data'] is List) ? List<dynamic>.from(res['data']) : [];

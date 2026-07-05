@@ -47,7 +47,7 @@ class _PayrollScreenState extends ConsumerState<PayrollScreen> {
   @override
   Widget build(BuildContext context) {
     final employees = ref.watch(employeeListProvider(null));
-    final async = ref.watch(salaryListProvider({'month': _monthString}));
+    final async = ref.watch(salaryListProvider(_monthString));
 
     return Scaffold(
       appBar: AppBar(

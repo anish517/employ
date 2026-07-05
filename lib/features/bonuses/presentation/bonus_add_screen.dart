@@ -62,7 +62,7 @@ class _BonusAddScreenState extends ConsumerState<BonusAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final employees = ref.watch(employeeListProvider({'status': 'Active'}));
+    final employees = ref.watch(employeeListProvider('status=Active'));
 
     return Scaffold(
       appBar: AppBar(title: const Text('Add Bonus')),
